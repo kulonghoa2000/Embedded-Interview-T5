@@ -19,122 +19,97 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 - Để chạy file code C trên `terminal` dùng lệnh `gcc -o filename filename.c` đẻ tạo ra tệp thực thi, sau đó dùng lệnh `./filename` để chạy tệp thực thi đó.
 
 ### Boot Mode
+
 - Cấp nguồn:
-	- Khi cấp nguồn cho vi điều khiển, nó sẽ bắt đầu quá trình khởi động.
-	- Lúc này các thanh ghi và bộ nhớ của vi điều khiển sẽ có giá trị không xác định.
+  - Khi cấp nguồn cho vi điều khiển, nó sẽ bắt đầu quá trình khởi động.
+  - Lúc này các thanh ghi và bộ nhớ của vi điều khiển sẽ có giá trị không xác định.
 - Tạo Stack Pointer(SP):
-	- Stack Pointer(SP) là một thanh ghi đặc biệt để quản lý ngăn xếp(stack).
-	- Giá trị ban đầu của SP thường được thiết lập tại địa chỉ nhất định trong bộ nhớ.
-	- Quá trình thiết lập SP có thể thực hiện thông qua việc gán giá trị một địa chỉ cố định vào thanh ghi SP.
+  - Stack Pointer(SP) là một thanh ghi đặc biệt để quản lý ngăn xếp(stack).
+  - Giá trị ban đầu của SP thường được thiết lập tại địa chỉ nhất định trong bộ nhớ.
+  - Quá trình thiết lập SP có thể thực hiện thông qua việc gán giá trị một địa chỉ cố định vào thanh ghi SP.
 - Tạo Program Counter(PC):
-	- Là một thanh ghi đặt biệt dùng để lưu địa chỉ của lệnh hiện tại được thực thi.
-	- Giá trị ban đầu của PC thường được thiết lập là địa chỉ bắt đầu của chương trình
-	- Quá trình thiệt lập PC thực hiện thông qua việc gán giá trị địa chỉ bắt đầu của chương trình vào thanh ghi PC
-- Khởi động chương trình: 
-	- Sau khi SP và PC được khởi tạo thì chương trình chính bắt đầu khởi động
-	- Vi điều khiển sẽ đọc từng câu lệnh và thực thi nó.
-	- Nó sẽ thực hiện các lệnh tiếp theo bằng cách tăng giá trị của PC để trỏ đế địa chỉ lệnh tiếp theo
-	- Bước nhảy của địa chỉ tùy thuộc vào vi điều khiển (Ví dụ: vđk 8bit thì mỗi lần nhảy thì PC sẽ trỏ tới địa chỉ lên 1byte, tương tự 16bit sẽ là 2 bytes)
-	- Trong quá trình chạy, nếu gặp lệnh gọi hàm con thì VĐK sẽ tạo ra một ngăn xếp mới để lưu trữ các biến cục bộ và thông tin của hàm đó.
-		- Lúc này, giá trị của SP sẽ lưu lại địa chỉ của câu lệnh hiện tại và giá trị của PC sẽ trỏ tới địa chỉ bắt đầu của hàm con đó và thực thi .
-		- Sau khi chạy xong trả về kết quả. Thì ngăn xếp đó sẽ được giải phóng, PC sẽ được gán thành địa chỉ của SP trước đó và tiếp tục thực hiện chương trình.
-- ***Ví dụ:*** Chương trình trên VĐK 32bits và địa chỉ của hàm ham() là 0x0000ff00.
-	```C
-	#include<stdio.h>
-	void ham() {
+  - Là một thanh ghi đặt biệt dùng để lưu địa chỉ của lệnh hiện tại được thực thi.
+  - Giá trị ban đầu của PC thường được thiết lập là địa chỉ bắt đầu của chương trình
+  - Quá trình thiệt lập PC thực hiện thông qua việc gán giá trị địa chỉ bắt đầu của chương trình vào thanh ghi PC
+- Khởi động chương trình:
+  - Sau khi SP và PC được khởi tạo thì chương trình chính bắt đầu khởi động
+  - Vi điều khiển sẽ đọc từng câu lệnh và thực thi nó.
+  - Nó sẽ thực hiện các lệnh tiếp theo bằng cách tăng giá trị của PC để trỏ đế địa chỉ lệnh tiếp theo
+  - Bước nhảy của địa chỉ tùy thuộc vào vi điều khiển (Ví dụ: vđk 8bit thì mỗi lần nhảy thì PC sẽ trỏ tới địa chỉ lên 1byte, tương tự 16bit sẽ là 2 bytes)
+  - Trong quá trình chạy, nếu gặp lệnh gọi hàm con thì VĐK sẽ tạo ra một ngăn xếp mới để lưu trữ các biến cục bộ và thông tin của hàm đó.
+    - Lúc này, giá trị của SP sẽ lưu lại địa chỉ của câu lệnh hiện tại và giá trị của PC sẽ trỏ tới địa chỉ bắt đầu của hàm con đó và thực thi .
+    - Sau khi chạy xong trả về kết quả. Thì ngăn xếp đó sẽ được giải phóng, PC sẽ được gán thành địa chỉ của SP trước đó và tiếp tục thực hiện chương trình.
+- **_Ví dụ:_** Chương trình trên VĐK 32bits và địa chỉ của hàm ham() là 0x0000ff00.
+  ```C
+  #include<stdio.h>
+  void ham() {
     	int a = 5;
-	}
-	int main() {
+  }
+  int main() {
     	int b = ham();
     	printf("%d", b);
-	}
-	```
-	- Địa chỉ 0x00000000: Khởi động chương trình.
-	- Địa chỉ 0x00000004: Khởi tạo SP với giá trị không xác định.
-	- Địa chỉ 0x00000008: Khởi tạo PC với địa chỉ bắt đầu của hàm main(), và PC có giá trị là 0x00000008. SP không thay đổi.
+  }
+  ```
+  - Địa chỉ 0x00000000: Khởi động chương trình.
+  - Địa chỉ 0x00000004: Khởi tạo SP với giá trị không xác định.
+  - Địa chỉ 0x00000008: Khởi tạo PC với địa chỉ bắt đầu của hàm main(), và PC có giá trị là 0x00000008. SP không thay đổi.
     - Địa chỉ 0x0000000C: PC trỏ tới lệnh trong hàm main() và có địa chỉ là 0x0000000C. SP không thay đổi.
-   	- Địa chỉ 0x00000010: PC trỏ tới lệnh gọi hàm ham(). PC có địa chỉ là 0x00000010, và SP được gán địa chỉ là 0x00000010 để sau khi chạy xong hàm ham(), PC có thể lấy địa chỉ của SP để chạy tiếp chương trình.
+    - Địa chỉ 0x00000010: PC trỏ tới lệnh gọi hàm ham(). PC có địa chỉ là 0x00000010, và SP được gán địa chỉ là 0x00000010 để sau khi chạy xong hàm ham(), PC có thể lấy địa chỉ của SP để chạy tiếp chương trình.
     - Địa chỉ 0x0000FF00: PC trỏ tới địa chỉ bắt đầu của hàm ham(), và PC có địa chỉ là 0x0000FF00. SP vẫn giữ nguyên giá trị là 0x00000010.
-  	- Địa chỉ 0x0000FF04: PC tiếp tục nhảy thêm 4 byte đối với địa chỉ trước đó để thực hiện lệnh int a = 5, địa chỉ PC lúc này là 0x0000FF04. SP vẫn giữ nguyên giá trị là 0x00000010. Sau khi chạy xong hàm, PC sẽ quay trở lại địa chỉ của SP, tức là 0x00000010.
-   	- Địa chỉ 0x00000014: PC trỏ tới lệnh printf("%d", b);. Lúc này, địa chỉ PC sẽ là 0x00000014, và SP vẫn giữ nguyên giá trị là 0x00000010.
-	
+    - Địa chỉ 0x0000FF04: PC tiếp tục nhảy thêm 4 byte đối với địa chỉ trước đó để thực hiện lệnh int a = 5, địa chỉ PC lúc này là 0x0000FF04. SP vẫn giữ nguyên giá trị là 0x00000010. Sau khi chạy xong hàm, PC sẽ quay trở lại địa chỉ của SP, tức là 0x00000010.
+    - Địa chỉ 0x00000014: PC trỏ tới lệnh printf("%d", b);. Lúc này, địa chỉ PC sẽ là 0x00000014, và SP vẫn giữ nguyên giá trị là 0x00000010.
+
 </details>
-
-
 
 <details>
   <summary><h2>*Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</h2></summary>
 	
 <h3>Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</h3>
 
-| Stack |
-|:-----:|
-|   ↓   |
-|   ↑   |	
-|  Heap |
-|  Bss(Uninitialized data)  |
-|  Data(Initialized data)   |
-|  Text |
-- ***Text:*** Quyền truy cập chỉ có thể Read
-	- Chứa khai báo các hằng số(.rodata)
-	- Nó chưa lệnh thực thi nên tránh sửa đổi instruction
-- ***Data:*** Quyền truy cập Read-Write
-	- Chứa biến toàn cục hoặc biến static: Có giá trị khởi tạo khác 0
-	- Được giải phóng khi kết thúc chương trình
-- ***Bss:*** Quyền truy cập Read-Write
-	- Chứa biến toàn cục hoặc các biến static: Có giá trị khởi tạo bằng 0 hoặc không khởi tạo
-	- Được giải phóng khi kết thúc chương trình
-- ***Stack:*** Quyền truy cập là Read-Write.
-	- Được sử dụng cấp phát cho biến local, input parameter của hàm,...
-	- Sẽ được giải phóng khi ra khỏi block code/hàm
-- ***Heap:*** Quyền truy cập là Read-Write.
-	- Được sử dụng để cấp phát bộ nhớ động như: Malloc, Calloc,...
-	- Sẽ được giải phóng khi gọi hàm free,...
-	### So sánh Stack và Heap?
-	- Bộ nhớ: Bộ nhớ Heap và bộ nhớ Stack bản chất đều cùng là vùng nhớ được tạo ra và lưu trữ trong RAM khi chương trình được thực thi.
-		- Stack được dùng để lưu trữ các biến cục bộ trong hàm, tham số truyền vào... Truy cập vào bộ nhớ này rất nhanh và được thực thi khi chương trình được biên dịch.
-		- Heap được dùng để lưu trữ vùng nhớ cho những biến con trỏ được cấp phát động bởi các hàm malloc - calloc - realloc (trong C)
-	- Kích thước vùng nhớ:
-		- Stack: kích thước của bộ nhớ Stack là cố định, tùy thuộc vào từng hệ điều hành, ví dụ hệ điều hành Windows là 1 MB, hệ điều hành Linux là 8 MB (lưu ý là con số có thể khác tùy thuộc vào kiến trúc hệ điều hành của bạn).
-		- Heap: kích thước của bộ nhớ Heap là không cố định, có thể tăng giảm do đó đáp ứng được nhu cầu lưu trữ dữ liệu của chương trình.
-	- Đặc điểm vùng nhớ
-		- Stack: vùng nhớ Stack được quản lý bởi hệ điều hành, dữ liệu được lưu trong Stack sẽ tự động hủy khi hàm thực hiện xong công việc của mình.
-		- Heap: Vùng nhớ Heap được quản lý bởi lập trình viên (trong C hoặc C++), dữ liệu trong Heap sẽ không bị hủy khi hàm thực hiện xong, điều đó có nghĩa bạn phải tự tay hủy vùng nhớ bằng câu lệnh free (trong C), và delete hoặc delete [] (trong C++), nếu không sẽ xảy ra hiện tượng rò rỉ bộ nhớ. 
-	### Lưu ý: 
-	- Việc tự động dọn vùng nhớ còn tùy thuộc vào trình biên dịch trung gian.
-	- Vấn đề lỗi xảy ra đối với vùng nhớ Stack: Bởi vì bộ nhớ Stack cố định nên nếu chương trình bạn sử dụng quá nhiều bộ nhớ vượt quá khả năng lưu trữ của Stack chắc chắn sẽ xảy ra tình trạng tràn bộ nhớ Stack (Stack overflow), các trường hợp xảy ra như bạn khởi tạo quá nhiều biến cục bộ, hàm đệ quy vô hạn,..
-		- Ví dụ về tràn bộ nhớ stack với hàm đệ quy vô hạn:
-		```C
+|          Stack          |
+| :---------------------: |
+|            ↓            |
+|            ↑            |
+|          Heap           |
+| Bss(Uninitialized data) |
+| Data(Initialized data)  |
+|          Text           |
+
+- **_Text:_** Quyền truy cập chỉ có thể Read
+  - Chứa khai báo các hằng số(.rodata)
+  - Nó chưa lệnh thực thi nên tránh sửa đổi instruction
+- **_Data:_** Quyền truy cập Read-Write
+  - Chứa biến toàn cục hoặc biến static: Có giá trị khởi tạo khác 0
+  - Được giải phóng khi kết thúc chương trình
+- **_Bss:_** Quyền truy cập Read-Write
+  - Chứa biến toàn cục hoặc các biến static: Có giá trị khởi tạo bằng 0 hoặc không khởi tạo
+  - Được giải phóng khi kết thúc chương trình
+- **_Stack:_** Quyền truy cập là Read-Write.
+  - Được sử dụng cấp phát cho biến local, input parameter của hàm,...
+  - Sẽ được giải phóng khi ra khỏi block code/hàm
+- **_Heap:_** Quyền truy cập là Read-Write. - Được sử dụng để cấp phát bộ nhớ động như: Malloc, Calloc,... - Sẽ được giải phóng khi gọi hàm free,... ### So sánh Stack và Heap? - Bộ nhớ: Bộ nhớ Heap và bộ nhớ Stack bản chất đều cùng là vùng nhớ được tạo ra và lưu trữ trong RAM khi chương trình được thực thi. - Stack được dùng để lưu trữ các biến cục bộ trong hàm, tham số truyền vào... Truy cập vào bộ nhớ này rất nhanh và được thực thi khi chương trình được biên dịch. - Heap được dùng để lưu trữ vùng nhớ cho những biến con trỏ được cấp phát động bởi các hàm malloc - calloc - realloc (trong C) - Kích thước vùng nhớ: - Stack: kích thước của bộ nhớ Stack là cố định, tùy thuộc vào từng hệ điều hành, ví dụ hệ điều hành Windows là 1 MB, hệ điều hành Linux là 8 MB (lưu ý là con số có thể khác tùy thuộc vào kiến trúc hệ điều hành của bạn). - Heap: kích thước của bộ nhớ Heap là không cố định, có thể tăng giảm do đó đáp ứng được nhu cầu lưu trữ dữ liệu của chương trình. - Đặc điểm vùng nhớ - Stack: vùng nhớ Stack được quản lý bởi hệ điều hành, dữ liệu được lưu trong Stack sẽ tự động hủy khi hàm thực hiện xong công việc của mình. - Heap: Vùng nhớ Heap được quản lý bởi lập trình viên (trong C hoặc C++), dữ liệu trong Heap sẽ không bị hủy khi hàm thực hiện xong, điều đó có nghĩa bạn phải tự tay hủy vùng nhớ bằng câu lệnh free (trong C), và delete hoặc delete [] (trong C++), nếu không sẽ xảy ra hiện tượng rò rỉ bộ nhớ. ### Lưu ý: - Việc tự động dọn vùng nhớ còn tùy thuộc vào trình biên dịch trung gian. - Vấn đề lỗi xảy ra đối với vùng nhớ Stack: Bởi vì bộ nhớ Stack cố định nên nếu chương trình bạn sử dụng quá nhiều bộ nhớ vượt quá khả năng lưu trữ của Stack chắc chắn sẽ xảy ra tình trạng tràn bộ nhớ Stack (Stack overflow), các trường hợp xảy ra như bạn khởi tạo quá nhiều biến cục bộ, hàm đệ quy vô hạn,.. - Ví dụ về tràn bộ nhớ stack với hàm đệ quy vô hạn:
+`C
 		int foo(int x){
 			printf("De quy khong gioi han\n");
 			return foo(x);
 		}
-		```
-	- Vấn đề lỗi xảy ra đối với vùng nhớ Heap: Nếu bạn liên tục cấp phát vùng nhớ mà không giải phóng thì sẽ bị lỗi tràn vùng nhớ Heap (Heap overflow). Nếu bạn khởi tạo một vùng nhớ quá lớn mà vùng nhớ Heap không thể lưu trữ một lần được sẽ bị lỗi khởi tạo vùng nhớ Heap thất bại.
-		- Ví dụ trường hợp khởi tạo vùng nhớ Heap quá lớn:
-		```C 
+		` - Vấn đề lỗi xảy ra đối với vùng nhớ Heap: Nếu bạn liên tục cấp phát vùng nhớ mà không giải phóng thì sẽ bị lỗi tràn vùng nhớ Heap (Heap overflow). Nếu bạn khởi tạo một vùng nhớ quá lớn mà vùng nhớ Heap không thể lưu trữ một lần được sẽ bị lỗi khởi tạo vùng nhớ Heap thất bại. - Ví dụ trường hợp khởi tạo vùng nhớ Heap quá lớn:
+`C 
 		int *A = (int *)malloc(18446744073709551615); 
-		```
-	### Các cách sử dụng malloc, calloc, realloc, free:
-	- ***Malloc:*** Cấp phát bộ nhớ động chưa có giá trị khởi tạo cho mỗi phần tử, trả về con trỏ NULL khi cấp phát thành công
-	```C 
+		` ### Các cách sử dụng malloc, calloc, realloc, free: - **_Malloc:_** Cấp phát bộ nhớ động chưa có giá trị khởi tạo cho mỗi phần tử, trả về con trỏ NULL khi cấp phát thành công
+`C 
 	void* malloc(size_t size);
-	```
-	- ***Calloc:*** Cấp phát bộ nhớ động có giá trị khởi tạo ban đầu của mỗi phần tử đều là 0, trả về con trỏ NULL khi cấp phát thành công
-	```C
+	` - **_Calloc:_** Cấp phát bộ nhớ động có giá trị khởi tạo ban đầu của mỗi phần tử đều là 0, trả về con trỏ NULL khi cấp phát thành công
+`C
 	void* calloc(size_t num, size_t size);
-	```
-	- ***Realloc:*** Thay đổi kích thước bộ nhớ của bộ nhớ đã được cấp phát trước đó của Malloc và Calloc, trả về con trỏ NULL khi thay đổi thành công
-	```C
+	` - **_Realloc:_** Thay đổi kích thước bộ nhớ của bộ nhớ đã được cấp phát trước đó của Malloc và Calloc, trả về con trỏ NULL khi thay đổi thành công
+`C
 	void* realloc(void* ptr, size_t size);
-	```
-	- ***Free:*** Giải phóng bộ nhớ đã được cấp phát bằng Malloc, Calloc, Realloc sau khi sử dụng xong, không có trả về
-	```C
+	` - **_Free:_** Giải phóng bộ nhớ đã được cấp phát bằng Malloc, Calloc, Realloc sau khi sử dụng xong, không có trả về
+`C
 	void free(void* ptr);
-	```
+	`
 </details>
-
-
 
 <details>
   <summary><h2>*Các biến trong C</h2></summary>
@@ -270,23 +245,23 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 - Biến static toàn cục: Biến toàn cục static sẽ chỉ có thể được truy cập và sử dụng trong File khai báo nó, các File khác không có cách nào truy cập được. 
 </details>
 
-
-
 <details>
   <summary><h2>*Macro, Inline, Function</h2></summary>
 
 - **_Macro:_** Được xử lý bởi preprocessor
-    - Thay thế đoạn code được khai báo macro vào bất cứ chỗ nào xuất hiện macro đó
-    - VD: Preprocessor khi gặp bất kỳ lời gọi SUM(first+last) nào thì thay ngay bằng
-    ```C
-    #define SUM(a,b)     (a+b)
-    ```
+  - Thay thế đoạn code được khai báo macro vào bất cứ chỗ nào xuất hiện macro đó
+  - VD: Preprocessor khi gặp bất kỳ lời gọi SUM(first+last) nào thì thay ngay bằng
+  ```C
+  #define SUM(a,b)     (a+b)
+  ```
 - **_Inline:_** Được xử lý bởi compiler
-    - Được khai báo với từ khóa inline
-    - Khi compiler thấy bất kỳ chỗ nào xuất hiện inline function, nó sẽ thay thế chỗ đó bởi định nghĩa của hàm đã được compile tương ứng. –> Phần được thay thế không phải code mà là đoạn code đã được compile
+  - Được khai báo với từ khóa inline
+  - Khi compiler thấy bất kỳ chỗ nào xuất hiện inline function, nó sẽ thay thế chỗ đó bởi định nghĩa của hàm đã được compile tương ứng. –> Phần được thay thế không phải code mà là đoạn code đã được compile
 - **_Function:_** Khi thấy hàm được gọi, compiler sẽ phải lưu con trỏ chương trình PC hiện tại vào stack; chuyển PC tới hàm được gọi, thực hiện hàm đó xong và lấy kết quả trả về; sau đó quay lại vị trí ban đầu trong stack trước khi gọi hàm và tiếp tục thực hiện chương trình.
-    - Như có thể thấy, các này khiến chương trình tốn thời gian hơn là chỉ cần thay thế đoạn code đã được compile (cách của inline function)
+  - Như có thể thấy, các này khiến chương trình tốn thời gian hơn là chỉ cần thay thế đoạn code đã được compile (cách của inline function)
+
 ### So sánh Macro, Inline, Function:
+
 - Macro đơn giản là chỉ thay thế đoạn code macro vào chỗ được gọi trước khi được biên dịch
 - Inline thay thế đoạn mã code đã được biên dịch vào chỗ được gọi
 - Hàm bình thường phải tạo một function call, lưu địa chỉ trước khi gọi hàm vào stack sau đó mới thực hiện hàm và sau cùng là quay trở về địa chỉ trên stack trước khi gọi hàm và thực hiện tiếp chương trình
@@ -295,90 +270,81 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 - Hàm bình thường sẽ phải gọi function call nên tốn thời gian hơn inline function nhưng code ngắn gọn hơn.
 </details>
 
-
-
 <details>
   <summary><h2>*BitWise Operarion (Thao tác bit)</h2></summary>
 
 - AND (Biểu thức AND): Ký hiệu: `&`.
-	| A | B | A & B |
-  	|---|---|:---:|
-  	|0|0|  0|
-  	|0|1|  0|
-  	|1|0|  0|
-  	|1|1|  1|
-    ```c
-    unsigned int a = 5;  // 0101
-	unsigned int b = 3;  // 0011
-	unsigned int result = a & b;  // 0001
-	```
+  | A | B | A & B |
+  |---|---|:---:|
+  |0|0| 0|
+  |0|1| 0|
+  |1|0| 0|
+  |1|1| 1|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int b = 3;  // 0011
+  unsigned int result = a & b;  // 0001
+  ```
 - OR (Biểu thức OR): Ký hiệu: `|`.
-	| A | B | A \| B |
-  	|---|---|:---:|
-  	|0|0|  0|
-  	|0|1|  1|
-  	|1|0|  1|
-  	|1|1|  1|
-    ```c
-    unsigned int a = 5;  // 0101
-	unsigned int b = 3;  // 0011
-	unsigned int result = a | b;  // 0111
-    ```
+  | A | B | A \| B |
+  |---|---|:---:|
+  |0|0| 0|
+  |0|1| 1|
+  |1|0| 1|
+  |1|1| 1|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int b = 3;  // 0011
+  unsigned int result = a | b;  // 0111
+  ```
 - XOR (Biểu thức XOR): Ký hiệu: `^`.
-	| A | B | A ^ B |
-  	|---|---|:---:|
-  	|0|0|  0|
-  	|0|1|  1|
-  	|1|0|  1|
-  	|1|1|  0|
-    ```c
-    unsigned int a = 5;  // 0101
-	unsigned int b = 3;  // 0011
-	unsigned int result = a ^ b;  // 0110
-    ```
+  | A | B | A ^ B |
+  |---|---|:---:|
+  |0|0| 0|
+  |0|1| 1|
+  |1|0| 1|
+  |1|1| 0|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int b = 3;  // 0011
+  unsigned int result = a ^ b;  // 0110
+  ```
 - NOT (Biểu thức NOT): Ký hiệu: `~`, thực hiện phép NOT bit, đảo ngược tất cả các bit của số.
-	| A | ~ A |
-  	|--|:---:|
-  	|0|  1|
-  	|1|  0|
-    ```c
-    unsigned int a = 5;  // 0101
-	unsigned int result = ~a;  // 1010 (đảo ngược các bit)
-    ```
+  | A | ~ A |
+  |--|:---:|
+  |0| 1|
+  |1| 0|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int result = ~a;  // 1010 (đảo ngược các bit)
+  ```
 - Left Shift (Dịch trái): Ký hiệu: `<<`.
-    ```c
-    unsigned int a = 5;  // 0101
-	unsigned int result = a << 2;  // 010100 (dịch trái 2 vị trí)
-    ```
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int result = a << 2;  // 010100 (dịch trái 2 vị trí)
+  ```
 - Right Shift (Dịch phải): Ký hiệu: `>>`.
-    ```c
-    unsigned int a = 5;  // 0101
-	unsigned int result = a >> 2;  // 0001 (dịch phải 2 vị trí)
-    ```
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int result = a >> 2;  // 0001 (dịch phải 2 vị trí)
+  ```
 - Left Shift và Assign (Dịch trái và gán): Ký hiệu: `<<=`, dịch trái các bit của số `a` đi `b` vị trí và gán lại giá trị cho `a`.
-    ```a <<= b;```
+  `a <<= b;`
 - Right Shift và Assign (Dịch phải và gán): Ký hiệu: `>>=`, dịch phải các bit của số `a` đi `b` vị trí và gán lại giá trị cho `a`.
-    ```a >>= b;```
+  `a >>= b;`
 - Bitwise AND và Assign (AND bit và gán): Ký hiệu: `&=`, thực hiện phép AND bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
-    ```a &= b;```
+  `a &= b;`
 - Bitwise OR và Assign (OR bit và gán): Ký hiệu: `|=`, thực hiện phép OR bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
-    ```a |= b;```
+  `a |= b;`
 - Bitwise XOR và Assign (XOR bit và gán): Ký hiệu: `^=`, thực hiện phép XOR bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
-	```a ^= b;```
+`a ^= b;`
 </details>
-
-
 
 <details>
   <summary><h2>*Struct và Union</h2></summary>
 
-- Về mặt ý nghĩa, struct và union cơ bản giống nhau. Tuy nhiên, về mặt lưu trữ trong bộ nhớ, chúng có sự khác biệt rõ rệt như sau:
-	- struct: Dữ liệu của các thành viên của struct được lưu trữ ở những vùng nhớ khác nhau. Do đó kích thước của 1 struct tối thiểu bằng kích thước các thành viên cộng lại tại vì còn phụ thuộc vào bộ nhớ đệm (struct padding).
-	- Union : Dữ liệu các thành viên sẽ dùng chung 1 vùng nhớ. Kích thước của union được tính là kích thước lớn nhất của kiểu dữ liệu trong union. Việc thay đổi nội dung của 1 thành viên sẽ dẫn đến thay đổi nội dung của các thành viên khác.
+- Về mặt ý nghĩa, struct và union cơ bản giống nhau. Tuy nhiên, về mặt lưu trữ trong bộ nhớ, chúng có sự khác biệt rõ rệt như sau: - struct: Dữ liệu của các thành viên của struct được lưu trữ ở những vùng nhớ khác nhau. Do đó kích thước của 1 struct tối thiểu bằng kích thước các thành viên cộng lại tại vì còn phụ thuộc vào bộ nhớ đệm (struct padding). - Union : Dữ liệu các thành viên sẽ dùng chung 1 vùng nhớ. Kích thước của union được tính là kích thước lớn nhất của kiểu dữ liệu trong union. Việc thay đổi nội dung của 1 thành viên sẽ dẫn đến thay đổi nội dung của các thành viên khác.
 </details>
-
-
-
 
 <details>
   <summary><h2>*Pointer</h2></summary>
@@ -407,93 +373,101 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 	```c
 	int x = 10;
     int *p1 = &x;     // Con trỏ p1 trỏ đến biến x và giá trị của p1 chỉnh là địa chỉ của biến x
-    int **p2 = &p1;	 // Con trỏ p2 trỏ đến con trỏ p1 và lưu địa chỉ của con trỏ p1 vào p2  
+    int **p2 = &p1;	 // Con trỏ p2 trỏ đến con trỏ p1 và lưu địa chỉ của con trỏ p1 vào p2
 
     printf("Giá trị của x: %d\n", *p1); //Giá trị của x: 10
-    printf("Địa chỉ của x: %p\n", p1); //Địa chỉ của x: 0x7ffee2a697a8 
+    printf("Địa chỉ của x: %p\n", p1); //Địa chỉ của x: 0x7ffee2a697a8
     printf("Giá trị của x: %d\n", **p2); //Giá trị của x: 10
     printf("Địa chỉ của p1: %p\n", p2); //Địa chỉ của p1: 0x7ffee2a697a0
-	```
-- ***Con trỏ hằng (Constant Pointers):*** Không thể thay đổi giá trị mà nó trỏ tới, nhưng có thể thay đổi địa chỉ mà nó trỏ tới.
-	```c
-	int num = 10; 
-	const int *ptr = &num; //thay đổi được địa chỉ của num nhưng không thay đổi được giá trị '10' của num
-	```
-- ***Con trỏ void (Void Pointers):*** Con trỏ void có thể trỏ tới bất kỳ kiểu dữ liệu nào, nhưng khi xuất ra giá trị thì phải ép kiểu.
-	```c
-	int num = 10;
-	float f = 3.14;
-	void *ptr;
-	ptr = &num;
-	printf("num = %d\n",(int*)ptr);
-	ptr = &f;
-	printf("f = %f\n",(float*)ptr);
-	```
-- ***Con trỏ hàm (Function Pointers):*** Dùng để lưu trữ và gọi các hàm thông qua con trỏ.
-	```c
-	int add(int a, int b) {
-		return a + b;
-	}
-	int subtract(int a, int b) {
-		return a - b;
-	}
+    ```
 
-	int main() {
-	
-		int (*operation)(int, int) = add;
-		int result = operation(5, 3);
-		printf("Result: %d\n", result);
+- **_Con trỏ hằng (Constant Pointers):_** Không thể thay đổi giá trị mà nó trỏ tới, nhưng có thể thay đổi địa chỉ mà nó trỏ tới.
+  ```c
+  int num = 10;
+  const int *ptr = &num; //thay đổi được địa chỉ của num nhưng không thay đổi được giá trị '10' của num
+  ```
+- **_Con trỏ void (Void Pointers):_** Con trỏ void có thể trỏ tới bất kỳ kiểu dữ liệu nào, nhưng khi xuất ra giá trị thì phải ép kiểu.
+  ```c
+  int num = 10;
+  float f = 3.14;
+  void *ptr;
+  ptr = &num;
+  printf("num = %d\n",(int*)ptr);
+  ptr = &f;
+  printf("f = %f\n",(float*)ptr);
+  ```
+- **_Con trỏ hàm (Function Pointers):_** Dùng để lưu trữ và gọi các hàm thông qua con trỏ.
 
-		operation = subtract;
-		result = operation(5, 3);
-		printf("Result: %d\n", result);
+  ```c
+  int add(int a, int b) {
+  	return a + b;
+  }
+  int subtract(int a, int b) {
+  	return a - b;
+  }
 
-		return 0;
-	}
+  int main() {
 
-	```
-- ***Con trỏ vào hàm (Pointers to Functions):*** Lưu trữ địa chỉ của một hàm cụ thể để gọi hàm thông qua con trỏ.
-	```c
-	int add(int a, int b) {
-		return a + b;
-	}
-	int subtract(int a, int b) {
-		return a - b;
-	}
+  	int (*operation)(int, int) = add;
+  	int result = operation(5, 3);
+  	printf("Result: %d\n", result);
 
-	void performOperation(int a, int b, int (*operation)(int, int)) {
-		int result = operation(a, b);
-		printf("Result: %d\n", result);
-	}
+  	operation = subtract;
+  	result = operation(5, 3);
+  	printf("Result: %d\n", result);
 
-	int main() {
-		int a = 5, b = 3;
+  	return 0;
+  }
 
-		performOperation(a, b, add);
-		performOperation(a, b, subtract);
+  ```
 
-		return 0;
-	}
+- **_Con trỏ vào hàm (Pointers to Functions):_** Lưu trữ địa chỉ của một hàm cụ thể để gọi hàm thông qua con trỏ.
 
-	```
-- ***Con trỏ hàm parameter (Function Pointer Parameters):*** Truyền một hàm như một tham số cho một hàm khác.
-	```c
-	void greet() {
-		printf("Hello, World!\n");
-	}
+  ```c
+  int add(int a, int b) {
+  	return a + b;
+  }
+  int subtract(int a, int b) {
+  	return a - b;
+  }
 
-	void performAction(void (*action)()) {
-		action();
-	}
+  void performOperation(int a, int b, int (*operation)(int, int)) {
+  	int result = operation(a, b);
+  	printf("Result: %d\n", result);
+  }
 
-	int main() {
-		performAction(greet);
+  int main() {
+  	int a = 5, b = 3;
 
-		return 0;
-	}
+  	performOperation(a, b, add);
+  	performOperation(a, b, subtract);
 
-	```
+  	return 0;
+  }
+
+  ```
+
+- **_Con trỏ hàm parameter (Function Pointer Parameters):_** Truyền một hàm như một tham số cho một hàm khác.
+
+  ```c
+  void greet() {
+  	printf("Hello, World!\n");
+  }
+
+  void performAction(void (*action)()) {
+  	action();
+  }
+
+  int main() {
+  	performAction(greet);
+
+  	return 0;
+  }
+
+  ```
+
 ### Lưu ý khi sử dụng con trỏ
+
 - Khi khởi tạo con trỏ NULL: Chữ NULL phải viết hoa, viết thường null sẽ bị lỗi.
 - Không nên sử dụng con trỏ khi chưa được khởi tạo: Kết quả tính toán có thể sẽ phát sinh những lỗi không lường trước được nếu chưa khởi tạo con trỏ.
 - Sử dụng biến con trỏ sai cách.
