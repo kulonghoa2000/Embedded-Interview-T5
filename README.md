@@ -476,8 +476,9 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 
 <details>
   <summary><h2>*Static</h2></summary>
+	
 - Static toàn cục: chỉ truy cập và sử dụng trong File khai báo nó, các File khác sẽ không thể truy cập được.
 - Static cục bộ: chỉ khởi tạo 1 lần và tồn tại suốt thời thời gian chạy chương trình. Giá trị không mất đi khi kết thúc hàm, tuy nhiên biến static cục bộ chỉ có thể được gọi trong hàm khởi tạo nó, giá trị của biến chính bằng giá trị gần nhất mà nó được gọi.
-Ngoài ra, còn có extern để thông báo biến đã được khai báo ở file khác.
+- Ngoài ra, còn có extern để thông báo biến đã được khai báo ở file khác.
 
 </details>
