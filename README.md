@@ -482,3 +482,60 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 - Ngoài ra, còn có extern để thông báo biến đã được khai báo ở file khác.
 
 </details>
+
+<details>
+  <summary><h2>*Extern</h2></summary>
+
+Biến extern được sử dụng khi một file cụ thể cần truy cập một biến từ file khác.
+
+Để sử dụng được biến toàn cục ở một file khác, chúng ta phải khai báo lại biến và thêm từ khóa extern phía trước, để báo rằng biến này đã được khi báo ở file khác.
+Cú pháp: extern <kiểu dữ liệu> <Tên Biến>;
+</details>
+
+<details>
+  <summary><h2>*CLASS</h2></summary>
+Class hay lớp là một mô tả trừu tượng (abstract) của nhóm các đối tượng (object) có cùng bản chất, ngược lại mỗi một đối tượng là một thể hiện cụ thể (instance) cho những mô tả trừu tượng đó. Một class trong C++ sẽ có các đặc điểm sau:
+
+- Một class bao gồm các thành phần dữ liệu (thuộc tính hay property) và các phương thức (hàm thành phần hay method).
+- Class thực chất là một kiểu dữ liệu do người lập trình định nghĩa.
+- Trong C++, từ khóa class sẽ chỉ điểm bắt đầu của một class sẽ được cài đặt.
+
+Khai báo class và sử dụng class
+
+Cú pháp khai báo một class cơ bản trong C++ như sau:
+class <ClassName> {
+    <access_modifier>:
+        <data_type> property;
+
+        <return_type> <method_name>(arguments) {
+            return <something_match_return_type>;
+        }
+
+        <_return_type> <_method_name>(_arguments);
+};
+
+<_return_type> <ClassName>::<_method_name>(_arguments) {
+    return <something_match_return_type>;
+}
+
+Lưu ý: các thuộc tính có thể bị trùng tên với các tham số trong các phương thức, vậy nên chúng ta nên dùng this-> hoặc toán tử phân giải phạm vi (::), ví dụ:
+class Person {
+    public:
+        string firstName;
+        string lastName;
+        int age;
+
+        void fullname() {
+            cout << this->firstName << ' ' << Person::lastName;
+        }
+};
+Đối với toán tử phạm vi :: dùng để xác định phương thức hoặc thuộc tính được gọi thuộc lớp nào. Như trong ví dụ trên là truy xuất thuộc tính lastName thuộc lớp Person. Nếu như gọi từ namespace hoặc emum thì toán tử :: được dùng để gọi thành viên của namepsace hoặc enum đó. Ngoài ra, toán tử phân giải phạm vi nếu không có tên lớp phía trước thì được dùng để gọi một biến bên ngoài scope.
+
+Access modifiers & properties declaration:
+
+Access modifier là phạm vi truy cập của các thuộc tính và phương thức sẽ được khai báo bên dưới nó. Có 3 phạm vi truy cập trong C++ là public, private và protected.
+
+-Các thuộc tính và phương thức khai báo public thì có thể được truy cập trực tiếp thông qua instance của class đó. Các thuộc tính nên khai báo là public nếu bạn không có ràng buộc điều kiện trước khi gán (người dùng có thể thoải mái gán giá trị) hoặc bạn không cần xử lý trước khi trả về giá trị thuộc tính.
+-Đối với private thì chỉ có thể được truy cập gián tiếp qua các phương thức public (Getter và setter). Các thuộc tính private thường được sử dụng khi bạn không mong muốn người khác có thể tùy ý gán giá trị hoặc là bạn muốn xử lý trước khi trả về giá trị.
+-Đối với protected, các phương thức và thuộc tính chỉ có thể truy cập qua các class kế thừa nó hoặc chính nó (sẽ được nói kĩ hơn trong bài kế thừa C++).
+</details>
