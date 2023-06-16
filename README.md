@@ -136,7 +136,7 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary><h2>*Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</h2></summary>
+  <summary>*Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</summary>
 	
 <h3>Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</h3>
 
