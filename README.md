@@ -1,4 +1,78 @@
 <details>
+  <summary><h2>*BitWise Operarion (Thao tác bit)</h2></summary>
+
+- AND (Biểu thức AND): Ký hiệu: `&`.
+  | A | B | A & B |
+  |---|---|:---:|
+  |0|0| 0|
+  |0|1| 0|
+  |1|0| 0|
+  |1|1| 1|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int b = 3;  // 0011
+  unsigned int result = a & b;  // 0001
+  ```
+- OR (Biểu thức OR): Ký hiệu: `|`.
+  | A | B | A \| B |
+  |---|---|:---:|
+  |0|0| 0|
+  |0|1| 1|
+  |1|0| 1|
+  |1|1| 1|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int b = 3;  // 0011
+  unsigned int result = a | b;  // 0111
+  ```
+- XOR (Biểu thức XOR): Ký hiệu: `^`.
+  | A | B | A ^ B |
+  |---|---|:---:|
+  |0|0| 0|
+  |0|1| 1|
+  |1|0| 1|
+  |1|1| 0|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int b = 3;  // 0011
+  unsigned int result = a ^ b;  // 0110
+  ```
+- NOT (Biểu thức NOT): Ký hiệu: `~`, thực hiện phép NOT bit, đảo ngược tất cả các bit của số.
+  | A | ~ A |
+  |--|:---:|
+  |0| 1|
+  |1| 0|
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int result = ~a;  // 1010 (đảo ngược các bit)
+  ```
+- Left Shift (Dịch trái): Ký hiệu: `<<`.
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int result = a << 2;  // 010100 (dịch trái 2 vị trí)
+  ```
+- Right Shift (Dịch phải): Ký hiệu: `>>`.
+  ```c
+  unsigned int a = 5;  // 0101
+  unsigned int result = a >> 2;  // 0001 (dịch phải 2 vị trí)
+  ```
+- Left Shift và Assign (Dịch trái và gán): Ký hiệu: `<<=`, dịch trái các bit của số `a` đi `b` vị trí và gán lại giá trị cho `a`.
+  `a <<= b;`
+- Right Shift và Assign (Dịch phải và gán): Ký hiệu: `>>=`, dịch phải các bit của số `a` đi `b` vị trí và gán lại giá trị cho `a`.
+  `a >>= b;`
+- Bitwise AND và Assign (AND bit và gán): Ký hiệu: `&=`, thực hiện phép AND bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
+  `a &= b;`
+- Bitwise OR và Assign (OR bit và gán): Ký hiệu: `|=`, thực hiện phép OR bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
+  `a |= b;`
+- Bitwise XOR và Assign (XOR bit và gán): Ký hiệu: `^=`, thực hiện phép XOR bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
+`a ^= b;`
+</details>
+ 
+ ##
+
+### Ngôn ngữ C
+
+<details>
   <summary><h2>*Quá trình biên dịch</h2></summary>
 	
 Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NNBC) (C/C++, Pascal, Java, C#…) sang ngôn ngữ đích (ngôn ngữ máy) để máy tính có thể hiểu và thực thi. Ngôn ngữ lập trình C là một ngôn ngữ dạng biên dịch. Chương trình được viết bằng C muốn chạy được trên máy tính phải trải qua một quá trình biên dịch để chuyển đổi từ dạng mã nguồn sang chương trình dạng mã thực thi.
@@ -270,75 +344,7 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 - Hàm bình thường sẽ phải gọi function call nên tốn thời gian hơn inline function nhưng code ngắn gọn hơn.
 </details>
 
-<details>
-  <summary><h2>*BitWise Operarion (Thao tác bit)</h2></summary>
 
-- AND (Biểu thức AND): Ký hiệu: `&`.
-  | A | B | A & B |
-  |---|---|:---:|
-  |0|0| 0|
-  |0|1| 0|
-  |1|0| 0|
-  |1|1| 1|
-  ```c
-  unsigned int a = 5;  // 0101
-  unsigned int b = 3;  // 0011
-  unsigned int result = a & b;  // 0001
-  ```
-- OR (Biểu thức OR): Ký hiệu: `|`.
-  | A | B | A \| B |
-  |---|---|:---:|
-  |0|0| 0|
-  |0|1| 1|
-  |1|0| 1|
-  |1|1| 1|
-  ```c
-  unsigned int a = 5;  // 0101
-  unsigned int b = 3;  // 0011
-  unsigned int result = a | b;  // 0111
-  ```
-- XOR (Biểu thức XOR): Ký hiệu: `^`.
-  | A | B | A ^ B |
-  |---|---|:---:|
-  |0|0| 0|
-  |0|1| 1|
-  |1|0| 1|
-  |1|1| 0|
-  ```c
-  unsigned int a = 5;  // 0101
-  unsigned int b = 3;  // 0011
-  unsigned int result = a ^ b;  // 0110
-  ```
-- NOT (Biểu thức NOT): Ký hiệu: `~`, thực hiện phép NOT bit, đảo ngược tất cả các bit của số.
-  | A | ~ A |
-  |--|:---:|
-  |0| 1|
-  |1| 0|
-  ```c
-  unsigned int a = 5;  // 0101
-  unsigned int result = ~a;  // 1010 (đảo ngược các bit)
-  ```
-- Left Shift (Dịch trái): Ký hiệu: `<<`.
-  ```c
-  unsigned int a = 5;  // 0101
-  unsigned int result = a << 2;  // 010100 (dịch trái 2 vị trí)
-  ```
-- Right Shift (Dịch phải): Ký hiệu: `>>`.
-  ```c
-  unsigned int a = 5;  // 0101
-  unsigned int result = a >> 2;  // 0001 (dịch phải 2 vị trí)
-  ```
-- Left Shift và Assign (Dịch trái và gán): Ký hiệu: `<<=`, dịch trái các bit của số `a` đi `b` vị trí và gán lại giá trị cho `a`.
-  `a <<= b;`
-- Right Shift và Assign (Dịch phải và gán): Ký hiệu: `>>=`, dịch phải các bit của số `a` đi `b` vị trí và gán lại giá trị cho `a`.
-  `a >>= b;`
-- Bitwise AND và Assign (AND bit và gán): Ký hiệu: `&=`, thực hiện phép AND bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
-  `a &= b;`
-- Bitwise OR và Assign (OR bit và gán): Ký hiệu: `|=`, thực hiện phép OR bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
-  `a |= b;`
-- Bitwise XOR và Assign (XOR bit và gán): Ký hiệu: `^=`, thực hiện phép XOR bit trên từng cặp bit của hai số và gán lại giá trị cho `a`.
-`a ^= b;`
-</details>
 
 <details>
   <summary><h2>*Struct và Union</h2></summary>
@@ -492,50 +498,120 @@ Biến extern được sử dụng khi một file cụ thể cần truy cập m�
 Cú pháp: extern <kiểu dữ liệu> <Tên Biến>;
 </details>
 
+##
+
+### Ngôn ngữ C++
 <details>
   <summary><h2>*CLASS</h2></summary>
-Class hay lớp là một mô tả trừu tượng (abstract) của nhóm các đối tượng (object) có cùng bản chất, ngược lại mỗi một đối tượng là một thể hiện cụ thể (instance) cho những mô tả trừu tượng đó. Một class trong C++ sẽ có các đặc điểm sau:
-
-- Một class bao gồm các thành phần dữ liệu (thuộc tính hay property) và các phương thức (hàm thành phần hay method).
-- Class thực chất là một kiểu dữ liệu do người lập trình định nghĩa.
-- Trong C++, từ khóa class sẽ chỉ điểm bắt đầu của một class sẽ được cài đặt.
-
-Khai báo class và sử dụng class
-
-Cú pháp khai báo một class cơ bản trong C++ như sau:
-class <ClassName> {
-    <access_modifier>:
-        <data_type> property;
-
-        <return_type> <method_name>(arguments) {
-            return <something_match_return_type>;
-        }
-
-        <_return_type> <_method_name>(_arguments);
-};
-
-<_return_type> <ClassName>::<_method_name>(_arguments) {
-    return <something_match_return_type>;
-}
-
-Lưu ý: các thuộc tính có thể bị trùng tên với các tham số trong các phương thức, vậy nên chúng ta nên dùng this-> hoặc toán tử phân giải phạm vi (::), ví dụ:
+### Khái niệm
+> Class hay lớp là một mô tả trừu tượng **(abstract)** của nhóm các đối tượng **(object)** có cùng bản chất, ngược lại mỗi một đối tượng là một thể hiện cụ thể **(instance)** cho những mô tả trừu tượng đó. Một class trong C++ sẽ có các đặc điểm sau:  
+> - Một class bao gồm các thành phần dữ liệu (thuộc tính hay property) và các phương thức (hàm thành phần hay method).
+> - Class thực chất là một kiểu dữ liệu do người lập trình định nghĩa.
+> - Trong C++, từ khóa class sẽ chỉ điểm bắt đầu của một class sẽ được cài đặt.
+ 
+### Khai báo class và sử dụng class
+   
+```ruby
 class Person {
-    public:
-        string firstName;
-        string lastName;
-        int age;
+public:
+string firstName; // property
+string lastName; // property
+int age; // property
+void fullname() { // method
+cout << firstName << ' ' << lastName;
+}
+}
+```
+   
+ ### Access modifiers & properties declaration
+   
+> ***Access modifier*** là phạm vi truy cập của các thuộc tính và phương thức sẽ được khai báo bên dưới nó. Có 3 phạm vi truy cập trong C++ là **public**, **private** và **protected**
+> - Các thuộc tính và phương thức khai báo public thì có thể được truy cập trực tiếp thông qua instance của class đó. Các thuộc tính nên khai báo là public nếu bạn không có ràng buộc điều kiện trước khi gán (người dùng có thể  thoải mái gán giá trị) hoặc bạn không cần xử lý trước khi trả về giá trị thuộc tính.
+> - Các thuộc tính private thường được sử dụng khi bạn không mong muốn người khác có thể tùy ý gán giá trị hoặc là bạn muốn xử lý trước khi trả về giá trị.
+> - Đối với protected, các phương thức và thuộc tính chỉ có thể truy cập qua các class kế thừa nó hoặc chính nó.
 
-        void fullname() {
-            cout << this->firstName << ' ' << Person::lastName;
-        }
+### Method declaration
+   
+   > Phương thức cũng giống như một hàm bình thường. Nó có thể có hoặc không có tham số, không trả về giá trị và thậm chí là override hàm.
+     Đối với phương thức thì có **hai cách** định nghĩa thi hành: định nghĩa thi hành trong lúc định nghĩa class và định nghĩa thi hành bên ngoài class.
+ 
+   👉 **Định nghĩa thi hành bên trong class:**
+```ruby
+class Animal {
+ public:
+ string sound;
+ void makeNoise() {
+ cout << sound;
+ }
 };
-Đối với toán tử phạm vi :: dùng để xác định phương thức hoặc thuộc tính được gọi thuộc lớp nào. Như trong ví dụ trên là truy xuất thuộc tính lastName thuộc lớp Person. Nếu như gọi từ namespace hoặc emum thì toán tử :: được dùng để gọi thành viên của namepsace hoặc enum đó. Ngoài ra, toán tử phân giải phạm vi nếu không có tên lớp phía trước thì được dùng để gọi một biến bên ngoài scope.
+```
+   
+   👉 **Định nghĩa thi hành bên ngoài class:**
+```ruby
+class Animal {
+ public:
+ string sound;
+ void makeNoise();
+};
+void Animal::makeNoise() {
+ cout << sound;
+}
+```
 
-Access modifiers & properties declaration:
+   👉 **Tham số truyền vào phương thức:**  
+- Cách 1: Dặt tên trùng với thuộc tính Class bằng cách kết hợp toán tử :: và con trỏ _this_\
+- Cách 2: Đặt tên khác với thuộc tính ( thường thêm dấu "_" trước tên tham số giống thuộc tính private
+   
+🔹 ***Con trỏ this*** : đề cập đến thể hiện hay instance của class đó, thông qua con trỏ this ta có thể truy cập đến các thuộc tính và phương thức.
+   
+🔹 ***Toán tử phạm vi*** : dùng để xác định phương thức hoặc thuộc tính được gọi từ Class nào.
+   
+### Constructor
+> Constructor hay hàm dựng là một hàm đặc biệt, nó sẽ được gọi ngay khi chúng ta khởi tạo một object. Công dụng chính là khởi gán các thuộc tính
+   
+### Static member
+> Static member hay thành viên tĩnh trong class C++ cũng tương tự như với static variable (biến tĩnh) trong function. Đối với function, sau khi thực hiện xong khối lệnh và thoát thì biến tĩnh vẫn sẽ không mất đi. Đối với class, thành viên tĩnh sẽ là thuộc tính dùng chung cho tất cả các đối tượng của class đó, cho dù là không có đối tượng nào tồn tại. Tức là bạn có thể khai báo nhiều object, mỗi object các thuộc tính của nó đều khác nhau nhưng riêng static thì chỉ có một và static member tồn tại trong suốt chương trình cho dù có hay không có object nào của nó hay nói ngắn gọn là dùng chung một biến static.
 
-Access modifier là phạm vi truy cập của các thuộc tính và phương thức sẽ được khai báo bên dưới nó. Có 3 phạm vi truy cập trong C++ là public, private và protected.
+</details>
 
--Các thuộc tính và phương thức khai báo public thì có thể được truy cập trực tiếp thông qua instance của class đó. Các thuộc tính nên khai báo là public nếu bạn không có ràng buộc điều kiện trước khi gán (người dùng có thể thoải mái gán giá trị) hoặc bạn không cần xử lý trước khi trả về giá trị thuộc tính.
--Đối với private thì chỉ có thể được truy cập gián tiếp qua các phương thức public (Getter và setter). Các thuộc tính private thường được sử dụng khi bạn không mong muốn người khác có thể tùy ý gán giá trị hoặc là bạn muốn xử lý trước khi trả về giá trị.
--Đối với protected, các phương thức và thuộc tính chỉ có thể truy cập qua các class kế thừa nó hoặc chính nó (sẽ được nói kĩ hơn trong bài kế thừa C++).
+<details>
+<summary>*OOP</summary>
+
+### Khái niệm
+> OOP Object - Oriented Programming là cách tư duy mới tiếp cận hướng đối tượng để giải quyết các vấn đề bằng máy tính. Là một mô hình dựa trên khái niệm về Class và Object. Nó được sử dụng để tách 1 chương trình thành các phần đơn giản hơn, có thể tái sử dụng.
+
+### Các đặc tính của lập trình hướng đối tượng
+> Có 4 đặc tính: Kế thừa, Trừu tượng, Đa hình và Đóng gói
+
+👉 **Tính kế thừa / Inheritance**
+- Có 3 loại kế thừa : public, private và protected
+   
+   > Có nghĩa là một Class có thể kế thừa lại Class trước đó. Class kế thừa được gọi là Class con hay còn gọi là _subclass_. Class được kế thừa gọi là class cha hay còn gọi là _superclass_. Ngoài ra còn có thể mở rộng thêm các thành phần kế thừa và bổ sung thêm các thành phần mới.
+   
+👉 **Tính trừu tượng / Abstraction**
+- Chỉ cần biết kết quả chứ không quan tâm cách làm
+   > Là một khả năng mà chương trình có thể bỏ qua sự phức tạp bằng cách tập trung vào cốt lõi của thông tin cần xử lý. Điều đó có nghĩa, bạn có thể xử lý một đối tượng bằng cách gọi tên một phương thức và thu về kết quả xử lý, mà không cần biết làm cách nào đối tượng đó được các thao tác trong class.
+
+👉 **Tính đa hình / Polymorphism**
+- Có thể đạt được đa hình theo kiểu ghi đè phương thức (Method Overriding) hoặc nạp chồng phương thức ( Method Overloading)
+   > Là một khả năng mà một phương thức trong class có thể đưa ra các kết quả hoàn toàn khác nhau, tùy thuộc vào dữ liệu được xử lý.
+   
+👉 **Tính đóng gói / Encapsulation**
+- Mỗi thuộc tính sẽ có phạm vi truy cập hay còn gọi là access modifier -> Private
+   > Có ý nghĩa không cho phép người sử dụng các đối tượng thay đổi trạng thái nội tại của một đối tượng, mà chỉ có phương thức nội tại của đối tượng có thể thay đổi chính nó. Điều đó có nghĩa, dữ liệu và thông tin sẽ được đóng gói lại, giúp các tác động bên ngoài một đối tượng không thể làm thay đổi đối tượng đó, nên sẽ đảm bảo tính toàn vẹn của đối tượng, cũng như giúp dấu đi các dữ liệu thông tin cần được che giấu.
+
+</details>
+
+<details>
+
+<summary>*Namespacce and Templete</summary>
+   
+### Namespace
+   > Namespace là từ khóa trong C++ được sử dụng để định nghĩa một phạm vi nhằm mục đích phân biệt các hàm, lớp, biến, ... cùng tên trong các thư viện khác nhau. Thông thưognf ta hay dùng namespace "std" trong thư viện iostream
+
+### Templete
+   > Là một từ khóa trong C++, và là một kiểu dữ liệu trừu tượng tổng quát hóa cho các kiểu dữ liệu int, float, double, bool...
+     Template trong C++ có **2 loại** đó là _ function template_ & _class template_.
+     Template giúp người lập trình định nghĩa tổng quát cho hàm và lớp thay vì phải nạp chồng (overloading) cho từng hàm hay phương thức với những kiểu dữ liệu khác nhau.
+
 </details>
