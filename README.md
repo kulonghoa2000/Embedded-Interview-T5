@@ -1,5 +1,5 @@
 <details>
-  <summary><h2>*BitWise Operarion (Thao tác bit)</h2></summary>
+  <summary>*BitWise Operarion (Thao tác bit)</summary>
 
 - AND (Biểu thức AND): Ký hiệu: `&`.
   | A | B | A & B |
@@ -73,7 +73,7 @@
 ### Ngôn ngữ C
 
 <details>
-  <summary><h2>*Quá trình biên dịch</h2></summary>
+  <summary>*Quá trình biên dịch</summary>
 	
 Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NNBC) (C/C++, Pascal, Java, C#…) sang ngôn ngữ đích (ngôn ngữ máy) để máy tính có thể hiểu và thực thi. Ngôn ngữ lập trình C là một ngôn ngữ dạng biên dịch. Chương trình được viết bằng C muốn chạy được trên máy tính phải trải qua một quá trình biên dịch để chuyển đổi từ dạng mã nguồn sang chương trình dạng mã thực thi.
 	
@@ -186,7 +186,7 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary><h2>*Các biến trong C</h2></summary>
+  <summary>*Các biến trong C</summary>
 	
 - Biến số nguyên (Integer Variables): Lưu trữ giá trị số nguyên không có phần thập phân.
 	`int age = 25;`
@@ -320,7 +320,7 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary><h2>*Macro, Inline, Function</h2></summary>
+  <summary>*Macro, Inline, Function</summary>
 
 - **_Macro:_** Được xử lý bởi preprocessor
   - Thay thế đoạn code được khai báo macro vào bất cứ chỗ nào xuất hiện macro đó
@@ -347,13 +347,13 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 
 
 <details>
-  <summary><h2>*Struct và Union</h2></summary>
+  <summary>*Struct and Union</summary>
 
 - Về mặt ý nghĩa, struct và union cơ bản giống nhau. Tuy nhiên, về mặt lưu trữ trong bộ nhớ, chúng có sự khác biệt rõ rệt như sau: - struct: Dữ liệu của các thành viên của struct được lưu trữ ở những vùng nhớ khác nhau. Do đó kích thước của 1 struct tối thiểu bằng kích thước các thành viên cộng lại tại vì còn phụ thuộc vào bộ nhớ đệm (struct padding). - Union : Dữ liệu các thành viên sẽ dùng chung 1 vùng nhớ. Kích thước của union được tính là kích thước lớn nhất của kiểu dữ liệu trong union. Việc thay đổi nội dung của 1 thành viên sẽ dẫn đến thay đổi nội dung của các thành viên khác.
 </details>
 
 <details>
-  <summary><h2>*Pointer</h2></summary>
+  <summary>*Pointer</summary>
 	
 - Bộ nhớ RAM chứa rất nhiều ô nhớ, `mỗi ô nhớ có kích thước 1 byte`. Mỗi ô nhớ có địa chỉ duy nhất và địa chỉ này được đánh số từ 0 trở đi. Nếu `CPU 32bit` thì có `2^32 địa chỉ` có thể đánh cho các ô nhớ trong RAM.
 	| Ô nhớ | 0 | 1 | ... | 2^32-2 | 2^32-1 |
@@ -481,7 +481,7 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary><h2>*Static</h2></summary>
+  <summary>*Static</summary>
 	
 - Static toàn cục: chỉ truy cập và sử dụng trong File khai báo nó, các File khác sẽ không thể truy cập được.
 - Static cục bộ: chỉ khởi tạo 1 lần và tồn tại suốt thời thời gian chạy chương trình. Giá trị không mất đi khi kết thúc hàm, tuy nhiên biến static cục bộ chỉ có thể được gọi trong hàm khởi tạo nó, giá trị của biến chính bằng giá trị gần nhất mà nó được gọi.
@@ -490,7 +490,7 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary><h2>*Extern</h2></summary>
+  <summary>*Extern</summary>
 
 Biến extern được sử dụng khi một file cụ thể cần truy cập một biến từ file khác.
 
@@ -502,7 +502,7 @@ Cú pháp: extern <kiểu dữ liệu> <Tên Biến>;
 
 ### Ngôn ngữ C++
 <details>
-  <summary><h2>*CLASS</h2></summary>
+  <summary>*CLASS</summary>
 ### Khái niệm
 > Class hay lớp là một mô tả trừu tượng **(abstract)** của nhóm các đối tượng **(object)** có cùng bản chất, ngược lại mỗi một đối tượng là một thể hiện cụ thể **(instance)** cho những mô tả trừu tượng đó. Một class trong C++ sẽ có các đặc điểm sau:  
 > - Một class bao gồm các thành phần dữ liệu (thuộc tính hay property) và các phương thức (hàm thành phần hay method).
