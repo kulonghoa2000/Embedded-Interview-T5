@@ -481,22 +481,25 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary>*Static</summary>
-	
+  <summary>*Static and Extern</summary>
+Static
 - Static toàn cục: chỉ truy cập và sử dụng trong File khai báo nó, các File khác sẽ không thể truy cập được.
 - Static cục bộ: chỉ khởi tạo 1 lần và tồn tại suốt thời thời gian chạy chương trình. Giá trị không mất đi khi kết thúc hàm, tuy nhiên biến static cục bộ chỉ có thể được gọi trong hàm khởi tạo nó, giá trị của biến chính bằng giá trị gần nhất mà nó được gọi.
 - Ngoài ra, còn có extern để thông báo biến đã được khai báo ở file khác.
 
-</details>
-
-<details>
-  <summary>*Extern</summary>
-
+Extern
 Biến extern được sử dụng khi một file cụ thể cần truy cập một biến từ file khác.
 
 Để sử dụng được biến toàn cục ở một file khác, chúng ta phải khai báo lại biến và thêm từ khóa extern phía trước, để báo rằng biến này đã được khi báo ở file khác.
 Cú pháp: extern <kiểu dữ liệu> <Tên Biến>;
+
 </details>
+
+
+  
+
+
+
 
 ##
 
