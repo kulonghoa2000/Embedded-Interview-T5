@@ -489,6 +489,7 @@ Static
 - Ngoài ra, còn có extern để thông báo biến đã được khai báo ở file khác.
 
 Extern
+
 Biến extern được sử dụng khi một file cụ thể cần truy cập một biến từ file khác.
 Để sử dụng được biến toàn cục ở một file khác, chúng ta phải khai báo lại biến và thêm từ khóa extern phía trước, để báo rằng biến này đã được khi báo ở file khác.
 
