@@ -136,7 +136,7 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary><h2>*Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</h2></summary>
+  <summary>*Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</summary>
 	
 <h3>Phân vùng bộ nhớ trên RAM, cấp phát bộ nhớ động</h3>
 
@@ -481,22 +481,22 @@ Quy trình dịch là quá trình chuyển đổi từ ngôn ngữ bậc cao (NN
 </details>
 
 <details>
-  <summary>*Static</summary>
+  <summary>*Static and Extern</summary>
+Static
 	
 - Static toàn cục: chỉ truy cập và sử dụng trong File khai báo nó, các File khác sẽ không thể truy cập được.
 - Static cục bộ: chỉ khởi tạo 1 lần và tồn tại suốt thời thời gian chạy chương trình. Giá trị không mất đi khi kết thúc hàm, tuy nhiên biến static cục bộ chỉ có thể được gọi trong hàm khởi tạo nó, giá trị của biến chính bằng giá trị gần nhất mà nó được gọi.
 - Ngoài ra, còn có extern để thông báo biến đã được khai báo ở file khác.
 
-</details>
-
-<details>
-  <summary>*Extern</summary>
+Extern
 
 Biến extern được sử dụng khi một file cụ thể cần truy cập một biến từ file khác.
-
 Để sử dụng được biến toàn cục ở một file khác, chúng ta phải khai báo lại biến và thêm từ khóa extern phía trước, để báo rằng biến này đã được khi báo ở file khác.
+
 Cú pháp: extern <kiểu dữ liệu> <Tên Biến>;
+
 </details>
+
 
 ##
 
@@ -613,5 +613,74 @@ void Animal::makeNoise() {
    > Là một từ khóa trong C++, và là một kiểu dữ liệu trừu tượng tổng quát hóa cho các kiểu dữ liệu int, float, double, bool...
      Template trong C++ có **2 loại** đó là _ function template_ & _class template_.
      Template giúp người lập trình định nghĩa tổng quát cho hàm và lớp thay vì phải nạp chồng (overloading) cho từng hàm hay phương thức với những kiểu dữ liệu khác nhau.
+
+</details>
+
+<details>
+
+<summary>*Virtual</summary>
+   
+> Là một hàm thành viên trong lớp cơ sở mà lớp dẫn xuất khi kế thừa cần ***phải định nghĩa lại***.
+> Hàm ảo được sử dụng trong lớp cơ sở khi cần đảm bảo hàm ảo đó sẽ được định  nghĩa lại trong lớp dẫn xuất. Việc này rất cần thiết trong trường hợp con trỏ có  kiểu là lớp cơ sở trỏ đến _đối tượng của lớp dẫn xuất_ ( hàm dẫn xuất được coi là khốp với lớp cơ sở nếu có cùng tên, loại tham số 'cho dù có là const' và kiểu trả về của hàm trong lớpcơ sở. Các hàm như vậy được gọi là ghi đè (Overiding).
+> Hàm ảo chỉ khác hàm thành phần thông thường khi được gọi từ một con trỏ. Sử  dụng hàm ảo khi muốn con trỏ đang trỏ tới đối tượng của lớp nào thì hàm thành phần của lớp đó sẽ được gọi mà không xem xét đến kiểu của con trỏ.
+   
+❗**Lưu ý**: Con trỏ của lớp cơ sở có thể chứa địa chỉ của đối tượng thuộc lớp dẫn xuất, nhưng ngược lại thì không được.
+   
+</details>
+
+<details>
+
+<summary>*Vector</summary>
+   
+> Giống như là mảng (array), vector trong C++ là một đối tượng dùng để chứa các đối  tượng khác, và các đối tượng được chứa này cũng được lưu trữ một cách liên tiếp  trong vector. Tuy nhiên, nếu như số lượng phần tử (size) của một mảng là cố định, thì ở vector, nó hoàn toàn có thể _thay đổi_ trong suốt quá trình làm việc của chương trình. 
+
+📓 **Modifiers**
+   1. **push_back()**: Hàm đẩy một phần tử vào vị trí sau cùng của vector. Nếu kiểu của đối tượng được truyền dưới dạng tham số trong push_back() không giống với kiểu 
+của vector thì sẽ bị ném ra.
+```ruby
+ten-vector.push_back(ten-cua-phan-tu);
+```
+   
+2. **assign()**: Nó gán một giá trị mới cho các phần tử vector bằng cách thay thế các  giá trị cũ.
+```ruby  
+ten-vector.assign(int size, int value);
+```   
+   
+3. **pop_back()**: Hàm pop_back () được sử dụng để xóa đi phần tử cuối cùng một vector.
+```ruby
+ten-vector.pop_back();   
+```  
+   
+4. **insert()**: Hàm này chèn các phần tử mới vào trước phần tử trước vị trí được trỏ bởi vòng lặp. Chúng ta cũng có thể chuyển một số đối số thứ ba, đếm số lần phần tử được chèn vào trước vị trí được trỏ.
+```ruby
+ten-vector.insert(position, value);   
+```    
+   
+5. **erase()**: Hàm được sử dụng để xóa các phần tử tùy theo vị trí vùng chứa
+```ruby
+ten-vector.erase(position);
+
+ten-vector.erase(start-position, end-position);   
+```      
+   
+6. **emplace()**: Nó mở rộng vùng chứa bằng cách chèn phần tử mới vào
+```ruby
+ten-vector.emplace(ten-vector.position, element);   
+```   
+   
+7. **emplace_back()**: Nó được sử dụng để chèn một phần tử mới vào vùng chứa vector, phần tử mới sẽ được thêm vào cuối vector
+```ruby
+ten-vector.emplace_back(value);   
+```    
+   
+8. **swap()**: Hàm được sử dụng để hoán đổi nội dung của một vector này với một vector khác cùng kiểu. Kích thước có thể khác nhau.
+```ruby
+ten-vector-1.swap(ten-vector-2);   
+```      
+   
+9. **clear()**: Hàm được sử dụng để loại bỏ tất cả các phần tử của vùng chứa vector
+```ruby
+ten-vector.clear();  
+``` 
 
 </details>
