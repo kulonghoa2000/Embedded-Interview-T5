@@ -688,7 +688,7 @@ ten-vector.clear();
 
 <details>
 
- <summary>:dove: Embedded</summary>
+ <summary> *Embedded</summary>
 
 <details>
     <summary>SPI</summary>
