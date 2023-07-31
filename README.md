@@ -684,3 +684,31 @@ ten-vector.clear();
 ``` 
 
 </details>
+
+
+<details>
+
+ <summary>:dove: Embedded</summary>
+
+<details>
+    <summary>SPI</summary>
+
+ Cách đấu nối:
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/1abce245-000f-40da-8fee-d6c54b8ebc87)
+ 
+- Chuẩn giao tiếp 4 dây: SCL, MOSI (master truyền data), MISO (master nhận data), SS (cho phép hoạt động)
+- Một master có thể giao tiếp song song với nhiều slave
+- Master muốn giao tiếp với 1 slave:
+  - Phải thông qua chân SS của master đó
+  - Chân SS của master phải mức thấp (gửi bit 0 cho slaver)
+- Tại 1 thời điểm master có thể vừa truyền và nhận data
+- Tại 1 thời điểm 1 master sẽ chỉ giao tiếp với 1 slave
+- Ví dụ: cho SS1 master giao tiếp với SS1 slave1:
+  - SS1 master phải xuống 0
+  - SS2 và SS3 master phải lên 1 để không cho phép master giao tiếp với slave2 và slave3
+- SPI có 4 mode truyền dữ liệu, phụ thuộc vào CPHOl, CPHA:
+  - CPHA = 0: đưa data vào chân MISO trước sau đó cần 1 SCL để đẩy data đi
+  - CPHA = 1: đưa 1 SCL trước, đưa data vào chân MISO sau đó SCL tiếp theo sẽ đẩy data đi
+</details>
+</details>
