@@ -685,10 +685,8 @@ ten-vector.clear();
 
 </details>
 
+### Embedded
 
-<details>
-
- <summary> *Embedded</summary>
 
 <details>
     <summary>SPI</summary>
