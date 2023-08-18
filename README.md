@@ -684,3 +684,192 @@ ten-vector.clear();
 ``` 
 
 </details>
+
+### Embedded
+
+
+<details>
+    <summary>SPI</summary>
+
+ Cách đấu nối:
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/1abce245-000f-40da-8fee-d6c54b8ebc87)
+ 
+- Chuẩn giao tiếp 4 dây: SCL, MOSI (master truyền data), MISO (master nhận data), SS (cho phép hoạt động)
+- Một master có thể giao tiếp song song với nhiều slave
+- Master muốn giao tiếp với 1 slave:
+  - Phải thông qua chân SS của master đó
+  - Chân SS của master phải mức thấp (gửi bit 0 cho slaver)
+- Tại 1 thời điểm master có thể vừa truyền và nhận data
+- Tại 1 thời điểm 1 master sẽ chỉ giao tiếp với 1 slave
+- Ví dụ: cho SS1 master giao tiếp với SS1 slave1:
+  - SS1 master phải xuống 0
+  - SS2 và SS3 master phải lên 1 để không cho phép master giao tiếp với slave2 và slave3
+- SPI có 4 mode truyền dữ liệu, phụ thuộc vào CPHOl, CPHA:
+  - CPHA = 0: đưa data vào chân MISO trước sau đó cần 1 SCL để đẩy data đi
+  - CPHA = 1: đưa 1 SCL trước, đưa data vào chân MISO sau đó SCL tiếp theo sẽ đẩy data đi
+</details>
+</details>
+<details>
+	<summary>I2C</summary>
+
+### Cấu trúc
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/5dbbcdce-3110-4774-a438-435d742f5c59)
+
+- Chuẩn giao tiếp 2 dây: SCL, SDA (truyền or nhận data)
+- Một master có thể giao tiếp với nhiều slave thông qua địa chỉ của slave đó 
+- Tại 1 thời điểm master chỉ có thể truyền hoặc nhận (vì có 1 chân SDA)
+- Hai chân này kéo lên điện áp cao để khi master không kết nối với slave thì 2 chân này mức cao
+
+Với cách nối này thì khi master truyền data thì tất cả các slaver đều nhận được ?
+- Vì mỗi slave sẽ có địa chỉ khác nhau, ví dụ:
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/ebd34149-e792-4d9d-8c38-e7b5f3f886f1)
+
+- Các slave đều nhận byte đầu tiên nhưng sẽ so sánh slave nào giống địa chỉ đó thì sẽ đọc tiếp
+
+## Data frame 
+Quá trình truyền data của I2C theo dạng massage
+### Start bit
+Kéo SDA và SCL từ mức cao xuống mức thấp.
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/019be0ce-64b7-49ae-acc1-923712964ff6)
+
+- Ban đầu 2 chân SDA SCL luôn ở mức cao
+- Cho SDA từ 1->0 sau đó cho SCL từ 1->0
+### Address + bit Read/Write
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/bd6758d7-4e7a-4917-9c73-327d8ce5c270)
+
+- Truyền 7 or 10 bits + 1 bit là read/write (1/0) (7 bit thì sẽ gửi 8 bit), read/write tùy thuộc vào master muốn nhận/truyền data từ slave
+### ACK bit
+Khi Slave nhận được data sẽ gửi bit 0 ACK cho master để master biết truyền thành công
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/b7c7c23c-c67b-42a3-b23a-0304721760c0)
+
+- Khi gừi bit địa chỉ xong sẽ đổi trạng thái từ out -> in mục đích để slave thông báo cho master là đã nhận data
+
+Vì phần cứng I2C SDA SCL luôn mức 1 nên master luôn nhận mức 1
+- Khi master truyền xong sẽ kích hoạt timer để đếm trong khoảng thời gian:
+  - Nếu slave nhận được data sẽ truyền bit 0 lại cho master để thông báo nhận được data
+  - Nếu hết timer mà không gừi lại thì slave không nhận được data
+- Khi nhận được bit 0 ACK từ slave sẽ đổi tiếp từ in -> out để gửi byte tiếp theo
+- Nếu master truyền không được sẽ thực hiện lại từ đầu
+### Stop bit
+Kết thúc quá trình sẽ có 1 bit stop là kéo từ mức thấp lên mức cao
+- Cho SCL từ 0->1 sau đó cho SDA từ 0->1
+</details>
+
+<details>
+	<summary>UART</summary>
+
+- Chuẩn giao tiếp 2 dây, Tx (truyền), Rx (nhận)
+- Chỉ có 2 UART có thể kết nối với nhau và chúng đồng cấp nhau
+- Tại 1 thời điểm có thể vừa truyền vừa nhận data
+- Nếu không truyền data Tx Rx luôn mức 1
+
+## Data frame
+Truyền theo dạng gói (package)
+### Start bit
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/208165b9-0541-449d-834f-409aab51f9b3)
+
+- Kéo Tx xuống mức 0
+- Baud rate = 9600 (tốc độ truyền bit/s): 1s thực hiện 9600 dao động (1 dao động truyền được 1 bit), 0,104ms truyền 1 bit, set timer (0-0.104ms) 0.104 sẽ ngắt 1 lần
+- 2 UART phải set timer trùng nhau
+### Data bits
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/c3435a3f-1c86-4dd5-b80b-39b9a7602cf9)
+
+- Truyền 5-9 bits data (thường 8 bits) + 1 bit chẵn/lẻ (0/1)
+### Bit chẵn lẻ
+Kiểm tra data có bị thay đổi trong quá trình truyền hay không 
+- Quy luật số chẵn: truyền 8 bits, đếm tổng số bit 1
+  - Nếu chẵn: thêm 1 bit 0 ở cuối
+  - Nếu lẻ: thêm 1 bit 1 ở cuối
+- Quy luật số lẻ: truyền 8 bits, đếm tổng số bit 1
+  - Nếu chẵn: thêm 1 bit 1 ở cuối
+  - Nếu lẻ: thêm 1 bit 0 ở cuối
+
+-> Thêm quy tắc chẵn/lẻ để kiểm tra có truyền đúng hay không, khác với xung clk (xung clk đồng bộ hơn, truyền data ổn định hơn) còn timer thì đôi khi bị lệch thời gian
+### 1-2 Stop bit
+- 1 stop bit: kéo Tx lên mức 1
+- 2 stop bit: kéo Tx lên mức 1, delay khoảng, kéo Tx lên mức 1
+</details>
+
+<details>
+	<summary>Interrupt</summary>
+
+ ## Ngắt
+ - Một sự kiện khẩn cấp xảy ra bên trong hoặc ngoài bộ VĐK (ngắt timer/ ngắt ngoài (truyền thông))
+ - Ngắt có độ ưu tiên cao hơn chương trình chính
+ - Khi ngắt xảy ra, VĐK dừng chương trình hiện tại, ngay lập tức thực hiện nhiệm vụ mà ngắt yêu cầu
+ - Có rất nhiều loại ngắt, muốn sử dụng ngắt nào thì đăng ký vào bảng vector ngắt thì các ngắt đó mới được hoạt động
+ - ISR (Interrupt Service Routine): trình phục vụ ngắt hay bảng vector ngắt
+   
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/0a41feca-b6f9-458e-8797-0ac44b2d8d14)
+
+- Thường số thứ tự ngắt càng thấp, độ ưu tiên ngắt càng cao
+- Có thể đặt độ ưu tiên ngắt tùy vào bô VĐK
+- Mỗi ngắt sẽ có 1 địa chỉ khác nhau
+## Ngắt ngoài
+Ngắt ngoài xảy ra khi có tín hiệu can thiệp từ bên ngoài, từ phần cứng, người sử dụng hay ngoại vi, ...
+### Ngắt ngoài hoạt động 
+Giả sử một chân của VĐK được cấu hình ngắt ngoài, nếu như tín hiệu mà chân đó nhận được bị thay đổi trạng thái mức năng lượng (từ mức HIGH xuống LOW hoặc ngược lại) thì ngắt sẽ được kích hoạt. 
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/fc5121f2-8e6e-4981-9240-43bb3f088372)
+
+Dựa vào sự chuyển đổi trạng thái, chia ra các loại:
+- High: kích hoạt liên tục khi trạng thái chân digital có mức cao
+- Low:  kích hoạt liên tục khi trạng thái chân digital có mức thấp
+- Rising edge (cạnh lên): ngắt khi tín hiệu chuyển từ mức LOW lên HIGH.
+- Falling edge (cạnh xuống) : ngắt khi tín hiệu chuyển từ mức HIGH xuống LOW.
+- Rising/Falling edge (cạnh lên và xuống) : ngắt khi tín hiệu thay đổi mức năng lượng, từ HIGH xuống LOW và từ LOW lên HIGH.
+## Ngắt truyền thông
+Ngắt truyền thông xảy ra khi có tín hiệu can thiệp trong quá trình truyền nhận data trong các giao thức I2C, SPI, UART, CAN, ... để quá trình truyền nhận data được chính xác.
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/05950939-dbe5-48ba-9db0-3bba13967b7e)
+
+Transmit() truyền data cho chân Rx, khi thấy có data truyền qua sẽ dừng main() và vào chương trình ngắt truyền thông (Receive()) để đọc data
+
+### Hoạt động của ngắt khi có nhiều ngắt xảy ra
+- Thực thi nốt lệnh đang thực hiện trong chương trình chính
+- Dừng chương trình đang thực hiện
+- Lưu lại địa chỉ của lệnh kế tiếp trong chương trình đang thực hiện vào bộ nhớ stack
+- Nhảy tới địa chỉ của chương trình ngắt
+- Tại đây, VĐK sẽ thực hiện chương trình con phục vụ ngắt do người lập trình đã lập trình từ trước.
+- Sau khi thực hiện xong chương trình con phục vụ ngắt, vi điều khiển lấy lại địa chỉ của lệnh kế tiếp đã được lưu và thực hiện tiếp chương trình đang thực hiện dở lúc chưa có ngắt
+> Nếu có nhiều ngắt xảy ra thì sẽ thực hiện chương trình có độ ưu tiên cao hơn.
+
+![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/2b182786-3317-45e1-8ab8-93b18a058221)
+
+## Biến Volatile trong ngắt
+Compiler sẽ biết đó là biến có thể bị thay đổi theo một cách nào đó ngoài ý muốn (do ISR: chương trình con xử lý ngắt). 
+
+Compiler sẽ buộc phải check giá trị của biến có kiểu volatile.
+</details>
+
+<details>
+	<summary>Timer</summary>
+
+ Tất cả các VĐK đều qua các bước này (Timer config):
+ - Timer base config, 2 thông số:
+   - Độ chia: để chia nhỏ tốc độ xung ra 
+   - Thời gian đếm bao nhiêu lần thì nó tràn: 1 dao động đếm 1 lần, nếu tràn sẽ xảy ra ngắt
+- Clear cờ: clear cờ để không xảy ra ngắt
+- Đăng ký ngắt vào vector table
+- Cho phép các ngắt trong vector table hoạt động
+- Cho phép timer đếm
+</details>
+
+<details>
+	<summary>CAN</summary>
+
+ ![image](https://github.com/nammesut/Embedded_Interview/assets/133733103/f45ad4b7-7cec-4c0f-97d9-b1d815dd33af)
+
+</details>
+
+<details>
+	<summary>Unit Test</summary>
+
+ - Unit Test là kỹ thuật kiểm thử những khối thành phần nhỏ nhất trong phần mềm (thường là các hàm hoặc phương thức).
+ - Unit Test được dùng để kiểm tra xem kết quả chương trình coder viết có cho ra kết quả như mình mong muốn hay không.
+</details>
