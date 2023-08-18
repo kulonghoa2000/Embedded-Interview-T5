@@ -1,5 +1,11 @@
 #include "pch.h"
 
+
+/*const int TamGiacKhongTonTai = 0;
+const int TamGiacDeu = 1;
+const int TamGiacCan = 2;
+const int TamGiacVuong = 3;
+const int TamGiacThuong = 4; */
 enum LoaiTamGiac {
     TamGiacKhongTonTai,
     TamGiacDeu,
